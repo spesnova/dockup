@@ -1,7 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
 if [[ "$RESTORE" == "true" ]]; then
-  ./restore.sh
+  sh /restore.sh
 else
-  ./backup.sh
+  sh /backup.sh
+  echo "${CRON_TIME} sh /backup.sh" > /crontab.conf
+  crontab  /crontab.conf
+  echo "=> Running cron job"
+  crond -l 0 -f
 fi
