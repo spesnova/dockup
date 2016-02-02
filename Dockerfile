@@ -1,7 +1,5 @@
-FROM ubuntu:trusty
-MAINTAINER Borja Burgos <borja@tutum.co>, Mia Iversen <mia@chillfox.com
-
-RUN apt-get update && apt-get install -y python-pip && pip install awscli
+FROM quay.io/spesnova/aws-cli:latest
+MAINTAINER Seigo Uchida <spesnova@gmail.com> (@spesnova)
 
 ADD backup.sh /backup.sh
 ADD restore.sh /restore.sh
