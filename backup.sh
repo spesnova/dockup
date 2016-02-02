@@ -8,8 +8,8 @@ readonly tarball=$BACKUP_NAME$BACKUP_SUFFIX.tar.gz
 tar czf $tarball $BACKUP_TAR_OPTION $PATHS_TO_BACKUP
 
 # Create bucket, if it doesn't already exist
-BUCKET_EXIST=$(aws s3 ls s3://$S3_BUCKET_NAME)
-if [ $BUCKET_EXIST -eq 0 ];
+aws s3 ls s3://$S3_BUCKET_NAME >/dev/null 2>&1
+if [ $? -ne 0 ];
 then
   aws s3 mb s3://$S3_BUCKET_NAME
 fi
