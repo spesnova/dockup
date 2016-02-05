@@ -45,16 +45,25 @@ AWS_ACCESS_KEY_ID=<key_here>
 AWS_SECRET_ACCESS_KEY=<secret_here>
 AWS_DEFAULT_REGION=us-east-1
 BACKUP_NAME=mysql
+MAX_NUMBER_OF_BACKUPS=10
 PATHS_TO_BACKUP=/etc/mysql /var/lib/mysql
-S3_BUCKET_NAME=docker-backups.example.com
+S3_BUCKET_NAME=my-bucket
 CRON_TIME=3 0-23/3 * * *
 ```
 
 `dockup` will use your AWS credentials to create a new bucket with name as per the environment variable `S3_BUCKET_NAME`, or if not defined, using the default name `docker-backups.example.com`. The paths in `PATHS_TO_BACKUP` will be tarballed, gzipped, time-stamped and uploaded to the S3 bucket regularly. You can control the time when it will starts with `CRON_TIME`.
 
-Then, you will be able to see the backups at AWS Management Console.
+Then, you will be able to see the backups are on S3 with `aws s3 ls` command.
 
-![](http://s.tutum.co.s3.amazonaws.com/support/images/dockup-readme.png)
+```bash
+$ aws s3 ls s3://my-bucket/mysql/
+2016-02-05 04:02:54    5190945 mysql.2016-02-05-04-02-51.tar.gz
+2016-02-05 04:03:08    5190945 mysql.2016-02-05-04-03-05.tar.gz
+2016-02-05 04:05:34    5190945 mysql.2016-02-05-04-05-31.tar.gz
+2016-02-05 04:07:06    5190945 mysql.2016-02-05-04-07-03.tar.gz
+2016-02-05 04:07:31    5190945 mysql.2016-02-05-04-07-28.tar.gz
+```
+
 
 ### Restore
 To perform a restore launch the container with the RESTORE variable set to `true`.
@@ -77,8 +86,9 @@ AWS_ACCESS_KEY_ID=<key_here>
 AWS_SECRET_ACCESS_KEY=<secret_here>
 AWS_DEFAULT_REGION=us-east-1
 BACKUP_NAME=mysql
+MAX_NUMBER_OF_BACKUPS=10
 PATHS_TO_BACKUP=/etc/mysql /var/lib/mysql
-S3_BUCKET_NAME=docker-backups.example.com
+S3_BUCKET_NAME=my-bucket
 RESTORE=true
 ```
 
