@@ -27,14 +27,31 @@ From executing a `$ docker inspect mysql` we see that this container has two vol
         }
 ```
 
-Launch `dockup` container with the following flags:
+Share these volumes between mysql container and dockup container with volume container:
 
 ```
+# data contaienr
+$ docker run \
+    --name data \
+    -v /etc/mysql \
+    -v /var/lib/mysql \
+    alpine:3.2 \
+    /bin/sh
+
+# mysql container
+$ docker run \
+    -d \
+    --name \
+    --volumes_from data \
+    mysql \
+    tutum/mysql
+
+# dockup container
 $ docker run \
     -d \
     --name backup \
     --env-file env.txt \
-    --volumes-from mysql \
+    --volumes-from data \
     quay.io/spesnova/dockup
 ```
 
@@ -74,8 +91,7 @@ Launch `dockup` container with the following flags:
 $ docker run \
     --name restore \
     --env-file env.txt \
-    -v /etc/mysql \
-    -v /var/lib/mysql \
+    --volumes_from data \
     quay.io/spesnova/dockup
 ```
 
@@ -92,12 +108,12 @@ S3_BUCKET_NAME=my-bucket
 RESTORE=true
 ```
 
-Then you can run a container with volumes from restore container.
+Then you can run a container with restored volumes.
 
 ```
 $ docker run \
     -d \
     --name mysql \
-    --volumes-from restore \
+    --volumes_from data \
     tutum/mysql
 ```
