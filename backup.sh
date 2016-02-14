@@ -4,7 +4,7 @@ echo "=> Backup has been started"
 
 # Get timestamp
 : ${BACKUP_SUFFIX:=.$(date +"%Y-%m-%d-%H-%M-%S")}
-readonly tarball=$BACKUP_NAME$BACKUP_SUFFIX.tar.gz
+readonly tarball=/$BACKUP_NAME$BACKUP_SUFFIX.tar.gz
 
 # Create a gzip compressed tarball with the volume(s)
 echo "=> Creating compressed backup: $tarball"
@@ -37,5 +37,9 @@ if [[ -n "$MAX_NUMBER_OF_BACKUPS" ]]; then
     done
   fi
 fi
+
+# Dispose of local backup
+echo "=> Removing local backup: $tarball"
+rm $tarball
 
 echo "=> Backup has been completed"
