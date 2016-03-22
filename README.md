@@ -92,7 +92,7 @@ $ docker run \
     --name restore \
     --env-file env.txt \
     --volumes_from data \
-    quay.io/spesnova/dockup
+    quay.io/spesnova/dockup restore
 ```
 
 The contents of `env.txt` being:
@@ -105,7 +105,6 @@ BACKUP_NAME=mysql
 MAX_NUMBER_OF_BACKUPS=10
 PATHS_TO_BACKUP=/etc/mysql /var/lib/mysql
 S3_BUCKET_NAME=my-bucket
-RESTORE=true
 ```
 
 Then you can run a container with restored volumes.
