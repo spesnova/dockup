@@ -1,4 +1,4 @@
-# Dockup [![Docker Repository on Quay](https://quay.io/repository/spesnova/aws-cli/status "Docker Repository on Quay")](https://quay.io/repository/spesnova/aws-cli)
+# Dockup [![Docker Repository on Quay](https://quay.io/repository/spesnova/dockup/status "Docker Repository on Quay")](https://quay.io/repository/spesnova/dockup)
 Docker image to backup/restore your Docker container volumes to AWS S3
 
 Why the name? Docker + Backup = Dockup
